@@ -1,9 +1,41 @@
 <html>
+
 <head>
+
 <title>Home Page</title>
-<hr>
-<body bgcolor = "pink">
-  <img src = "logo.jpg" height="200px" width= "100px" alt="image not available"></img>
-</body>
+
+<script>
+
+function fun1(){
+var address;
+alert("alert");
+address=document.getElementById("image_url");
+alert(address.value);
+document.getElementById("image").src=address.value;
+}
+
+
+
+
+
+</script>
 </head>
+<hr>
+
+<body bgcolor = "pink">
+  
+<img src = "logo.jpg" alt="image not available" id="image"></img>
+
+<input type= "text" id = "image_url">
+<input type= "button" id = "click" label="submit" onclick = "fun1()">
+</body>
+
+
+
+
+
+
+
+
+
 </html>
