@@ -17,6 +17,8 @@ function fun1(){
 	
 
 	var hrs=document.getElementById("hrs");
+	if (hrs==None)
+		hrs== 0;
 	image.src=address.value;
 	var width=image.width;
 	var height=image.height;
@@ -57,12 +59,12 @@ for( i=0;i<width/height*hrs.value;i++){
 </head>
 <hr>
 
-<body bgcolor = "pink">
+<body bgcolor = "black">
   
 <img src = "logo.jpg" alt="image not available" id="image" top="10%" left = "0"></img>
 
-<input type= "text" id = "image_url" top="0" left="0">
-<input type= "text" id= "hrs" top = "5%" left = "10%">
+<input type= "text" id = "image_url" top="0" left="0", onclick="fun1()">
+<input type= "text" id= "hrs" top = "5%" left = "10%" onclick=  "fun1()">
 <input type= "button" id = "click" label="submit" onclick = "fun1()" top= "5%" left=="20%">
 
 
