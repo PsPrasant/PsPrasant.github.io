@@ -4,7 +4,7 @@
 
 <title>Home Page</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
 angular.module("grids", [])
 	.controller("grid", function($scope){
 	$scope.rows = 4;
@@ -32,7 +32,7 @@ angular.module("grids", [])
 <input type= "text" id = "image_url" top="0" left="0", ng-bind = "imageuri">
 <input type= "text" id= "hrs" top = "5%" left = "10%" >
 <input type= "button" id = "click" label="submit" top= "5%" left=="20%">
-<div id = "image" ng-cotroller = "grid">
+<div ng-app = "grids" ng-cotroller = "grid">
 	<h1> number of rows {{rows}} number of columns {{cols}} </h1>
 	<img src = {{imageuri}}></img>	
 	
