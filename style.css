@@ -1,0 +1,42 @@
+#main {
+	width: 80%;
+	position: absolute;
+	background-color: powderblue;
+	left: 10%;
+	height: 100%;
+	scroll-behavior: auto;
+}
+
+#input {
+	padding: 10px;
+}
+
+label {
+	padding: 1px;
+}
+
+#imageAndGrid {
+	height: 100%;
+}
+
+#image_url {
+	width: 60%;
+	position: relative;
+}
+
+#image {
+	position: absolute;
+	height: 90%;
+	max-width: 100%;
+	object-fit: contain;
+}
+
+#grids {
+	position: absolute;
+	z-index: 1;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
