@@ -1,54 +1,26 @@
+<!DOCTYPE html>
 <html>
+	<head>
+		<title>grid.io</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"> </script>
+      <script type="text/javascript" src="script.js"></script>
+	</head>
 
-<head>
+	<body bgcolor = "white">
+		<div id = "main" ng-app = "grids" ng-controller="gridsController"> 
+			<div id= "input">
+				<label for = "image_url">Image URL</label>
+				<input type="url" id="image_url" ng-model="image_url">
+				<label for = "num_horizantal_grids">Number of Horizantal grids</label>
+				<input type="number" id="num_horizantal_grids" ng-model="num_grids" min="1", max="10">
+				<button id="submit" ng-click="submit()"> submit </button>
+			</div>
+			<div id= "imageAndGrid">
+            <img src="{{image_url}}" id="image">
+            <div id="grids"></div>
+			</div>
+		</div>
 
-<title>Home Page</title>
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
-angular.module("grids", [])
-	.controller("grid", function($scope){
-	$scope.rows = 4;
-	$scope.cols = 4;
-	
-
-
-
-
-
-
-
-
-
-
-});
-</script>
-</head>
-<hr>
-
-<body bgcolor = "white" ng-app = grids>
-
-<img src = "logo.jpg" alt="image not available" id="image" top="10%" left = "0"></img>
-
-<input type= "text" id = "image_url" top="0" left="0", ng-bind = "imageuri">
-<input type= "text" id= "hrs" top = "5%" left = "10%" >
-<input type= "button" id = "click" label="submit" top= "5%" left=="20%">
-<div ng-app = "grids" ng-cotroller = "grid">
-	<h1> number of rows {{rows}} number of columns {{cols}} </h1>
-	<img src = {{imageuri}}></img>	
-	
-	
-	
-	</div>
-	
-
-</body>
-
-
-
-
-
-
-
-
-
+	</body>
 </html>
