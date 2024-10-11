@@ -1,27 +1,162 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>grid.io</title>
-		<link rel="stylesheet" href="style.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"> </script>
-      <script type="text/javascript" src="script.js"></script>
-      <link rel = "icon" href ="favicon.png" type = "image/x-icon">
-	</head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencil to Transparent Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        canvas {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+        input, button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
 
-	<body bgcolor = "white">
-		<div id = "main" ng-app = "grids" ng-controller="gridsController"> 
-			<div id= "input">
-				<label for = "image_url">Image URL</label>
-				<input type="url" id="image_url" ng-model="image_url">
-				<label for = "num_horizantal_grids">Number of Horizantal grids</label>
-				<input type="number" id="num_horizantal_grids" ng-model="num_grids" min="1", max="10">
-				<button id="submit" ng-click="submit()"> submit </button>
-			</div>
-			<div id= "imageAndGrid">
-            <img src="{{image_url}}" id="image">
-            <div id="grids"></div>
-			</div>
-		</div>
+    <h1>Pencil Drawing to Transparent Image</h1>
 
-	</body>
+    <!-- File input for selecting an image -->
+    <input type="file" id="imageInput" accept="image/*">
+    
+    <!-- Input for threshold -->
+    <label for="thresholdInput">Enter Threshold (0-255):</label>
+    <input type="number" id="thresholdInput" min="0" max="255" value="128">
+    
+    <!-- Button to trigger the conversion -->
+    <button id="convertButton">Convert Image</button>
+
+    <!-- Canvas where the resized image will be drawn -->
+    <canvas id="displayCanvas"></canvas>
+
+    <!-- Button to download the processed image -->
+    <button id="downloadButton" style="display:none;">Download Processed Image</button>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const thresholdInput = document.getElementById('thresholdInput');
+        const convertButton = document.getElementById('convertButton');
+        const downloadButton = document.getElementById('downloadButton');
+        let displayCanvas = document.getElementById('displayCanvas');
+        let displayCtx = displayCanvas.getContext('2d');
+
+        let img = new Image();
+        let fullCanvas = document.createElement('canvas');  // Hidden full-resolution canvas
+        let fullCtx = fullCanvas.getContext('2d');
+        let inputCanvas = document.createElement('canvas');  // Hidden full-resolution canvas
+        let inputCtx = fullCanvas.getContext('2d');
+        let originalWidth, originalHeight;
+
+        // Event listener for image input change
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Event listener for image load (to draw it on canvas)
+        img.onload = function() {
+            originalWidth = img.width;
+            originalHeight = img.height;
+
+            // Resizing to fit the display canvas to a reasonable height (e.g., 400px)
+            const maxHeight = 400;
+            const aspectRatio = originalWidth / originalHeight;
+            let displayWidth, displayHeight;
+
+            if (originalHeight > maxHeight) {
+                displayHeight = maxHeight;
+                displayWidth = maxHeight * aspectRatio;
+            } else {
+                displayWidth = originalWidth;
+                displayHeight = originalHeight;
+            }
+
+            // Set canvas size for display
+            displayCanvas.width = displayWidth;
+            displayCanvas.height = displayHeight;
+
+            // Draw the resized image on the display canvas
+            displayCtx.drawImage(img, 0, 0, displayWidth, displayHeight);
+
+            // Set up the full-resolution canvas (no scaling here)
+            fullCanvas.width = originalWidth;
+            fullCanvas.height = originalHeight;
+            //fullCtx.drawImage(img, 0, 0, originalWidth, originalHeight);
+            inputCanvas.width = originalWidth;
+            inputCanvas.height = originalHeight;
+            inputCtx.drawImage(img, 0, 0, originalWidth, originalHeight);
+        };
+
+        // Function to convert image to transparent pencil sketch
+        convertButton.addEventListener('click', function() {
+            let threshold = parseInt(thresholdInput.value);
+            console.log("img")
+
+            if (isNaN(threshold) || threshold < 0 || threshold > 255) {
+                alert('Please enter a valid threshold between 0 and 255.');
+                return;
+            }
+
+            // Get image data from the full-resolution canvas
+            let imageData = inputCtx.getImageData(0, 0, originalWidth, originalHeight);
+            console.log(imageData)
+
+            let data = imageData.data;
+
+            // Process each pixel
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];     // Red channel
+                const g = data[i + 1]; // Green channel
+                const b = data[i + 2]; // Blue channel
+
+                // Convert the pixel to grayscale
+                const gray = 0.3 * r + 0.59 * g + 0.11 * b;
+
+                // Apply threshold to turn pixel into either black or white
+                const value = gray > threshold ? 255 : 0;
+
+                // Set the new pixel values (grayscale)
+                data[i] = data[i + 1] = data[i + 2] = value;
+
+                // Make the white pixels transparent
+                if (value === 255) {
+                    data[i + 3] = 0; // Set alpha to 0 for transparency
+                }
+            }
+
+            // Put the modified image data back on the full-resolution canvas
+            fullCtx.putImageData(imageData, 0, 0);
+            // Draw the processed image onto the display canvas (resized for display)
+            displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height);
+            console.log("img3")
+
+            displayCtx.drawImage(fullCanvas, 0, 0, displayCanvas.width, displayCanvas.height);
+
+            // Show the download button
+            downloadButton.style.display = 'inline-block';
+        });
+
+        // Function to download the processed image as PNG
+        downloadButton.addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.download = 'processed_image.png';
+            link.href = fullCanvas.toDataURL('image/png');  // Use full-resolution canvas for download
+            link.click();
+        });
+    </script>
+
+</body>
 </html>
