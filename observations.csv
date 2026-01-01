@@ -1,0 +1,22 @@
+label,direction,ticks_right,distance,depth,observing_lifepod
+Lifepod,E,0,0,0,False
+Lifepod 3 (SeaGlide),N,2.75,326,30,False
+Lifepod 12 (electric eels),NE,3.2,1372,250,False
+Degasi Jellyshroom Habitat,SE,2.5,593,250,False
+Auorora Rendevous,S,3.2,1325,0,False
+Desgasi Grandreef Habitat,S,3.3,1272,500,False
+Lifepod 19 (Keen),S,4.75,1218,300,False
+Lifepod 17 (Grass plain),SW,3,416,100,False
+Lifepod 13,W,3.75,900,175,False
+Lifepod 2 (CTO Yu),NW,4,1365,500,False
+Quarantine platform pool,S,4,1296,94,True
+Alien portal,NW,5.5,1460,274,True
+Lavazone entrance approximate ?,NE,-0.1,1396,1300,False
+Alien portal Lost river,SE,0.3,1373,621,True
+Kelp forest,SE,4.75,295,68,True
+Lava Zone,S,4,1281,1248,True
+Lava Zone,E,0.1,1312,1247,True
+Jellyshroom cave,NW,0.1,490,291,True
+Grand reef ???,S,4.75,1294,769,True
+Lost River ???,NE,1,1277,695,True
+Mushroom forest,SW,4.5,736,138,True
