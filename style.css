@@ -1,45 +1,48 @@
-#main {
-	width: 80%;
-	position: absolute;
-	background-color: powderblue;
-	left: 10%;
-	height: 100%;
-	scroll-behavior: auto;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #001421;
+  font-family: Arial, sans-serif;
 }
 
-#input {
-	padding: 10px;
+#title {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  color: #b2ebf2;
+  font-size: 18px;
+  z-index: 10;
 }
 
-label {
-	padding: 1px;
+/* Point labels (primary) */
+.label {
+  color: #e0f7fa;
+  font-size: 12px;
+  background: rgba(0, 40, 80, 0.85);
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
-#imageAndGrid {
-	height: 100%;
+/* Scale reference labels (very subtle) */
+.scale-label {
+  color: rgba(180, 180, 180, 0.6);
+  font-size: 8px;
+  background: transparent;
+  pointer-events: none;
 }
 
-#image_url {
-	width: 60%;
-	position: relative;
+#legend {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  font-size: 11px;
+  color: rgba(180, 220, 240, 0.7);
+  background: rgba(0, 20, 40, 0.6);
+  padding: 6px 10px;
+  border-radius: 6px;
+  line-height: 1.4;
+  pointer-events: none;
 }
-
-#image {
-	position: absolute;
-	height: 90%;
-	max-width: 100%;
-	object-fit: contain;
-}
-
-#grids {
-	position: absolute;
-	z-index: 1;
-}
-
-.div-grids {
-    display: inline-block;
-    border: 1px solid black;
-    float: left;
-   	position: absolute;
-}
-
