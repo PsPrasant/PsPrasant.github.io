@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Open Traffic Driving Simulator</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      padding: 24px;
+      max-width: 420px;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+    }
+
+    p {
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 16px 24px;
+      background: white;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Traffic Driving Simulator</h1>
+
+    <p>
+      Opening Google Play...
+    </p>
+
+    <a
+      class="button"
+      id="playStoreButton"
+      href="https://play.google.com/store/apps/details?id=com.ps.traffic_driving_simulator">
+      Open in Google Play
+    </a>
+  </div>
+
+
+  <script>
+    const packageName = "com.ps.traffic_driving_simulator";
+
+    const playStoreWeb =
+      "https://play.google.com/store/apps/details?id=" + packageName;
+
+    const playStoreDeepLink =
+      "market://details?id=" + packageName;
+
+    const playStoreIntent =
+      "intent://details?id=" + packageName +
+      "#Intent;" +
+      "scheme=market;" +
+      "package=com.android.vending;" +
+      "S.browser_fallback_url=" +
+      encodeURIComponent(playStoreWeb) +
+      ";" +
+      "end";
+
+
+    function openPlayStore() {
+
+      const userAgent = navigator.userAgent || "";
+      const isAndroid = /Android/i.test(userAgent);
+
+      if (isAndroid) {
+
+        /*
+          Intent URL explicitly asks Android
+          to open the Google Play Store app.
+        */
+        window.location.href = playStoreIntent;
+
+
+        /*
+          If Instagram/browser blocks the intent,
+          fall back after ~1.5 seconds.
+        */
+        setTimeout(() => {
+
+          if (!document.hidden) {
+            window.location.href = playStoreWeb;
+          }
+
+        }, 1500);
+
+      } else {
+
+        /*
+          Non-Android users just see
+          the normal Play Store website.
+        */
+        window.location.href = playStoreWeb;
+      }
+    }
+
+
+    /*
+      Try automatically when page loads.
+    */
+    window.addEventListener("load", () => {
+
+      setTimeout(openPlayStore, 300);
+
+    });
+
+
+    /*
+      Manual button fallback.
+    */
+    document
+      .getElementById("playStoreButton")
+      .addEventListener("click", function(event) {
+
+        const isAndroid =
+          /Android/i.test(navigator.userAgent);
+
+        if (isAndroid) {
+
+          event.preventDefault();
+
+          window.location.href = playStoreIntent;
+        }
+
+      });
+
+  </script>
+
+</body>
+</html>
